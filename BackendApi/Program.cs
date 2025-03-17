@@ -16,17 +16,14 @@ builder.Services.AddOpenApiDocument(config =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseOpenApi();
+app.UseSwaggerUi(config =>
 {
-    app.UseOpenApi();
-    app.UseSwaggerUi(config =>
-    {
-        config.DocumentTitle = "RodjendanAPI";
-        config.Path = "/swagger";
-        config.DocumentPath = "/swagger/{documentName}/swagger.json";
-        config.DocExpansion = "list";
-    });
-}
+    config.DocumentTitle = "RodjendanAPI";
+    config.Path = "/swagger";
+    config.DocumentPath = "/swagger/{documentName}/swagger.json";
+    config.DocExpansion = "list";
+});
 
 app.MapGet("/Rodjendani", async (RodjendanDb db) =>
     await db.Rodjendans.ToListAsync());
@@ -72,4 +69,4 @@ app.MapDelete("/Rodjendani/{id}", async (int id, RodjendanDb db) =>
     return Results.NotFound();
 });
 
-app.Run();
+app.Run("http://0.0.0.0:8080");

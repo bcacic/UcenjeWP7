@@ -20,6 +20,9 @@ builder.Services.AddOpenApiDocument(config =>
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
+
 // Use OpenAPI/Swagger for documentation
 app.UseOpenApi();
 app.UseSwaggerUi(config =>

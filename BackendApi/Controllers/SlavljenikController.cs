@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendApi.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BackendApi.Controllers
 {
@@ -12,49 +14,42 @@ namespace BackendApi.Controllers
 
         public SlavljenikController(RodjendanDb context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
-        // GET: api/Slavljenik
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Slavljenik>>> GetSlavljenici()
         {
-            // return await _context.Set<Rodjendan>().Include(r => r.SlavljenikNavigation).ToListAsync();
             return await _context.Set<Slavljenik>().Include(s => s.Rodjendani).ToListAsync();
         }
 
-        // GET: api/Slavljenik/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Slavljenik>> GetSlavljenik(int id)
         {
             var slavljenik = await _context.Set<Slavljenik>().Include(s => s.Rodjendani).FirstOrDefaultAsync(s => s.Sifra == id);
 
-            if (slavljenik == null)
-            {
-                return NotFound();
-            }
+            if (slavljenik == null) return NotFound();
 
             return slavljenik;
         }
 
-        // POST: api/Slavljenik
         [HttpPost]
         public async Task<ActionResult<Slavljenik>> PostSlavljenik(Slavljenik slavljenik)
         {
+            slavljenik.DatumKreiranja = DateTime.UtcNow;
+
             _context.Set<Slavljenik>().Add(slavljenik);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSlavljenik", new { id = slavljenik.Sifra }, slavljenik);
+            return CreatedAtAction(nameof(GetSlavljenik), new { id = slavljenik.Sifra }, slavljenik);
         }
 
-        // PUT: api/Slavljenik/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSlavljenik(int id, Slavljenik slavljenik)
         {
-            if (id != slavljenik.Sifra)
-            {
-                return BadRequest();
-            }
+            if (id != slavljenik.Sifra) return BadRequest();
+
+            slavljenik.DatumAzuriranja = DateTime.UtcNow;
 
             _context.Entry(slavljenik).State = EntityState.Modified;
             try
@@ -63,38 +58,23 @@ namespace BackendApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SlavljenikExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!_context.Set<Slavljenik>().Any(e => e.Sifra == id)) return NotFound();
+                throw;
             }
 
             return NoContent();
         }
 
-        // DELETE: api/Slavljenik/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSlavljenik(int id)
         {
             var slavljenik = await _context.Set<Slavljenik>().FindAsync(id);
-            if (slavljenik == null)
-            {
-                return NotFound();
-            }
+            if (slavljenik == null) return NotFound();
 
             _context.Set<Slavljenik>().Remove(slavljenik);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool SlavljenikExists(int id)
-        {
-            return _context.Set<Slavljenik>().Any(e => e.Sifra == id);
         }
     }
 }

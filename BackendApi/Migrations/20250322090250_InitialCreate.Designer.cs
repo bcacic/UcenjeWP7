@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendApi.Migrations
 {
     [DbContext(typeof(RodjendanDb))]
-    [Migration("20250321232545_InitialCreate")]
+    [Migration("20250322090250_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,7 +26,19 @@ namespace BackendApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("BrojGostiju")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double?>("Cijena")
+                        .HasColumnType("REAL");
+
                     b.Property<DateTime>("Datum")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DatumAzuriranja")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DatumKreiranja")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Ime")
@@ -34,8 +46,29 @@ namespace BackendApi.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
+                    b.Property<double?>("Kapara")
+                        .HasColumnType("REAL");
+
+                    b.Property<bool?>("KaparaPlacena")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("KrajDatum")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Napomena")
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Paket")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("SlavljenikSifra")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Sifra");
 
@@ -53,6 +86,12 @@ namespace BackendApi.Migrations
                     b.Property<DateTime?>("Datum")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("DatumAzuriranja")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DatumKreiranja")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -61,6 +100,10 @@ namespace BackendApi.Migrations
                     b.Property<string>("Ime")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Napomena")
+                        .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Prezime")

@@ -9,6 +9,7 @@ namespace BackendApi.Models
         [Key]
         public int Sifra { get; set; }
 
+        [Required]
         public int SlavljenikSifra { get; set; }
 
         [Required]
@@ -18,7 +19,29 @@ namespace BackendApi.Models
         [Required]
         public required DateTime Datum { get; set; }
 
-        // Navigation property
+        public DateTime? KrajDatum { get; set; }
+
+        [MaxLength(50)]
+        public string? Paket { get; set; }
+
+        public int? BrojGostiju { get; set; }
+
+        [MaxLength(20)]
+        public string? Status { get; set; }
+
+        public double? Cijena { get; set; }
+
+        public double? Kapara { get; set; }
+
+        public bool? KaparaPlacena { get; set; }
+
+        [MaxLength(500)]
+        public string? Napomena { get; set; }
+
+        public DateTime DatumKreiranja { get; set; } = DateTime.UtcNow;
+
+        public DateTime? DatumAzuriranja { get; set; }
+
         [ForeignKey("SlavljenikSifra")]
         [JsonIgnore]
         public virtual Slavljenik? SlavljenikNavigation { get; set; }
@@ -47,9 +70,14 @@ namespace BackendApi.Models
 
         public DateTime? Datum { get; set; }
 
-        // Navigation property
+        [MaxLength(500)]
+        public string? Napomena { get; set; }
+
+        public DateTime DatumKreiranja { get; set; } = DateTime.UtcNow;
+
+        public DateTime? DatumAzuriranja { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<Rodjendan>? Rodjendani { get; set; } = new List<Rodjendan>();
     }
-
 }

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendApi.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BackendApi.Controllers
 {
@@ -12,101 +14,70 @@ namespace BackendApi.Controllers
 
         public RodjendanController(RodjendanDb context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));  // Added null-check for clarity
-
+            _context = context;
         }
 
-        // GET: api/Rodjendan
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rodjendan>>> GetRodjendani()
         {
             return await _context.Set<Rodjendan>().Include(r => r.SlavljenikNavigation).ToListAsync();
         }
 
-        // GET: api/Rodjendan/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Rodjendan>> GetRodjendan(int id)
         {
-            var rodjendan = await _context.Set<Rodjendan>().Include(r => r.SlavljenikNavigation).FirstOrDefaultAsync(r => r.Sifra == id);
+            var rodjendan = await _context.Set<Rodjendan>()
+                .Include(r => r.SlavljenikNavigation)
+                .FirstOrDefaultAsync(r => r.Sifra == id);
 
-            if (rodjendan == null)
-            {
-                return NotFound();
-            }
+            if (rodjendan == null) return NotFound();
 
             return rodjendan;
         }
 
-        // POST: api/Rodjendan
         [HttpPost]
         public async Task<ActionResult<Rodjendan>> PostRodjendan(Rodjendan rodjendan)
         {
-            var slavljenik = await _context.Slavljenici.FindAsync(rodjendan.SlavljenikSifra);
-            if (slavljenik == null)
-            {
-                return BadRequest("Slavljenik with the given ID does not exist.");
-            }
+            rodjendan.DatumKreiranja = DateTime.UtcNow;
 
             _context.Set<Rodjendan>().Add(rodjendan);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRodjendan", new { id = rodjendan.Sifra }, rodjendan);
+            return CreatedAtAction(nameof(GetRodjendan), new { id = rodjendan.Sifra }, rodjendan);
         }
 
-        // PUT: api/Rodjendan/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRodjendan(int id, Rodjendan rodjendan)
         {
-            if (id != rodjendan.Sifra)
-            {
-                return BadRequest();
-            }
+            if (id != rodjendan.Sifra) return BadRequest();
 
-            var slavljenik = await _context.Slavljenici.FindAsync(rodjendan.SlavljenikSifra);
-            if (slavljenik == null)
-            {
-                return BadRequest("Slavljenik with the given ID does not exist.");
-            }
+            rodjendan.DatumAzuriranja = DateTime.UtcNow;
 
             _context.Entry(rodjendan).State = EntityState.Modified;
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RodjendanExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!_context.Set<Rodjendan>().Any(e => e.Sifra == id)) return NotFound();
+                throw;
             }
 
             return NoContent();
         }
 
-        // DELETE: api/Rodjendan/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRodjendan(int id)
         {
             var rodjendan = await _context.Set<Rodjendan>().FindAsync(id);
-            if (rodjendan == null)
-            {
-                return NotFound();
-            }
+            if (rodjendan == null) return NotFound();
 
             _context.Set<Rodjendan>().Remove(rodjendan);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool RodjendanExists(int id)
-        {
-            return _context.Set<Rodjendan>().Any(e => e.Sifra == id);
         }
     }
 }

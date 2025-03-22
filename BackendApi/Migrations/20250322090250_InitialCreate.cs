@@ -21,7 +21,10 @@ namespace BackendApi.Migrations
                     Prezime = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Telefon = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Datum = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Datum = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Napomena = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    DatumKreiranja = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DatumAzuriranja = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,7 +39,17 @@ namespace BackendApi.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     SlavljenikSifra = table.Column<int>(type: "INTEGER", nullable: false),
                     Ime = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Datum = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Datum = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    KrajDatum = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Paket = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    BrojGostiju = table.Column<int>(type: "INTEGER", nullable: true),
+                    Status = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
+                    Cijena = table.Column<double>(type: "REAL", nullable: true),
+                    Kapara = table.Column<double>(type: "REAL", nullable: true),
+                    KaparaPlacena = table.Column<bool>(type: "INTEGER", nullable: true),
+                    Napomena = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    DatumKreiranja = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DatumAzuriranja = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

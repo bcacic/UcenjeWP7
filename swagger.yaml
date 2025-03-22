@@ -1,0 +1,284 @@
+
+openapi: 3.0.0
+info:
+  title: Birthday Party Management API
+  description: API for managing birthday boys and birthday events
+  version: 1.0.0
+servers:
+  - url: http://localhost:5187
+    description: Development server
+
+paths:
+  /api/Slavljenik:
+    get:
+      summary: Get all birthday boys
+      operationId: getAllSlavljenici
+      responses:
+        '200':
+          description: A list of birthday boys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Slavljenik'
+    post:
+      summary: Create a new birthday boy
+      operationId: createSlavljenik
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Slavljenik'
+      responses:
+        '201':
+          description: Successfully created birthday boy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slavljenik'
+
+  /api/Slavljenik/{id}:
+    get:
+      summary: Get a birthday boy by ID
+      operationId: getSlavljenikById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the requested birthday boy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slavljenik'
+        '404':
+          description: Birthday boy not found
+    put:
+      summary: Update a birthday boy by ID
+      operationId: updateSlavljenik
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Slavljenik'
+      responses:
+        '200':
+          description: Successfully updated birthday boy
+        '404':
+          description: Birthday boy not found
+    delete:
+      summary: Delete a birthday boy by ID
+      operationId: deleteSlavljenik
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successfully deleted birthday boy
+        '404':
+          description: Birthday boy not found
+
+  /api/Rodjendan:
+    get:
+      summary: Get all birthdays
+      operationId: getAllRodjendani
+      responses:
+        '200':
+          description: A list of birthdays
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rodjendan'
+    post:
+      summary: Create a new birthday
+      operationId: createRodjendan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rodjendan'
+      responses:
+        '201':
+          description: Successfully created birthday
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rodjendan'
+
+  /api/Rodjendan/{id}:
+    get:
+      summary: Get a birthday by ID
+      operationId: getRodjendanById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the requested birthday
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rodjendan'
+        '404':
+          description: Birthday not found
+    put:
+      summary: Update a birthday by ID
+      operationId: updateRodjendan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rodjendan'
+      responses:
+        '200':
+          description: Successfully updated birthday
+        '404':
+          description: Birthday not found
+    delete:
+      summary: Delete a birthday by ID
+      operationId: deleteRodjendan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successfully deleted birthday
+        '404':
+          description: Birthday not found
+
+components:
+  schemas:
+    Slavljenik:
+      type: object
+      required:
+        - ime
+        - prezime
+        - email
+        - telefon
+      properties:
+        sifra:
+          type: integer
+          description: Unique identifier
+          readOnly: true
+        ime:
+          type: string
+          description: First name
+        prezime:
+          type: string
+          description: Last name
+        email:
+          type: string
+          format: email
+          description: Email address
+        telefon:
+          type: string
+          description: Phone number
+        datum:
+          type: string
+          format: date-time
+          description: Birth date
+        napomena:
+          type: string
+          description: Additional notes
+        datumKreiranja:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          readOnly: true
+        datumAzuriranja:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          readOnly: true
+
+    Rodjendan:
+      type: object
+      required:
+        - slavljenikSifra
+        - ime
+        - datum
+      properties:
+        sifra:
+          type: integer
+          description: Unique identifier
+          readOnly: true
+        slavljenikSifra:
+          type: integer
+          description: Reference to birthday boy ID
+        ime:
+          type: string
+          description: Birthday party name
+        datum:
+          type: string
+          format: date-time
+          description: Birthday date and time
+        krajDatum:
+          type: string
+          format: date-time
+          description: End date and time for the birthday party
+        paket:
+          type: string
+          enum: [basic, standard, premium]
+          description: Package type
+        brojGostiju:
+          type: integer
+          description: Number of guests
+        status:
+          type: string
+          enum: [upcoming, completed, cancelled]
+          description: Status of the birthday
+        cijena:
+          type: number
+          format: double
+          description: Price of the birthday
+        kapara:
+          type: number
+          format: double
+          description: Deposit amount
+        kaparaPlacena:
+          type: boolean
+          description: Whether the deposit is paid
+        napomena:
+          type: string
+          description: Additional notes
+        datumKreiranja:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          readOnly: true
+        datumAzuriranja:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          readOnly: true

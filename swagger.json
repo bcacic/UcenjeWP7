@@ -1,0 +1,406 @@
+{
+  "x-generator": "NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RodjendanAPI v1",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5187"
+    }
+  ],
+  "paths": {
+    "/api/Rodjendan": {
+      "get": {
+        "tags": [
+          "Rodjendan"
+        ],
+        "operationId": "Rodjendan_GetRodjendani",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Rodjendan"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rodjendan"
+        ],
+        "operationId": "Rodjendan_PostRodjendan",
+        "requestBody": {
+          "x-name": "rodjendan",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rodjendan"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rodjendan"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rodjendan/{id}": {
+      "get": {
+        "tags": [
+          "Rodjendan"
+        ],
+        "operationId": "Rodjendan_GetRodjendan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rodjendan"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rodjendan"
+        ],
+        "operationId": "Rodjendan_PutRodjendan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "rodjendan",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rodjendan"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rodjendan"
+        ],
+        "operationId": "Rodjendan_DeleteRodjendan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Slavljenik": {
+      "get": {
+        "tags": [
+          "Slavljenik"
+        ],
+        "operationId": "Slavljenik_GetSlavljenici",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Slavljenik"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Slavljenik"
+        ],
+        "operationId": "Slavljenik_PostSlavljenik",
+        "requestBody": {
+          "x-name": "slavljenik",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Slavljenik"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Slavljenik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Slavljenik/{id}": {
+      "get": {
+        "tags": [
+          "Slavljenik"
+        ],
+        "operationId": "Slavljenik_GetSlavljenik",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Slavljenik"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Slavljenik"
+        ],
+        "operationId": "Slavljenik_PutSlavljenik",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "slavljenik",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Slavljenik"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Slavljenik"
+        ],
+        "operationId": "Slavljenik_DeleteSlavljenik",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Rodjendan": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ime",
+          "datum"
+        ],
+        "properties": {
+          "sifra": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "slavljenikSifra": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ime": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1
+          },
+          "datum": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1
+          }
+        }
+      },
+      "Slavljenik": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ime",
+          "prezime",
+          "email",
+          "telefon"
+        ],
+        "properties": {
+          "sifra": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ime": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "prezime": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1
+          },
+          "telefon": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1
+          },
+          "datum": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}

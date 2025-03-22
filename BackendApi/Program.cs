@@ -3,6 +3,15 @@ using BackendApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://localhost:8080") // Frontend URL
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()); // Allow credentials
+});
+
 // Add SQLite Database with connection string from appsettings.json
 builder.Services.AddDbContext<RodjendanDb>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("RodjendanContext")));
@@ -20,6 +29,7 @@ builder.Services.AddOpenApiDocument(config =>
 
 var app = builder.Build();
 
+app.UseCors("AllowFrontend");
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 

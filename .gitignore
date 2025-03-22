@@ -1,4 +1,5 @@
 BackendApi/bin
 BackendApi/obj
 *.db
-
+Frontend/dist
+Frontend/node_modules
